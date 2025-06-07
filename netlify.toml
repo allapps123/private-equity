@@ -1,0 +1,31 @@
+[build]
+  command = "pnpm build:all"
+  publish = "src/dist"
+  functions = "server/netlify-functions"
+
+[dev]
+  port = 8888
+  functions = "server/netlify-functions"
+  framework = "#auto"
+  command = "pnpm dev:all"
+  functionsPort = 9999
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["express", "cors", "dotenv", "@types/express", "@types/cors"]
+  included_files = ["server/**/*"]
+  
+[build.environment]
+  NODE_VERSION = "18"
+  PNPM_VERSION = "8"
+  NODE_OPTIONS = "--experimental-specifier-resolution=node"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
