@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --exec \"node --loader ts-node/esm\" index.ts",
     "start": "node dist/index.js",
-    "build": "tsc",
+    "build": "tsc && tsc netlify-functions/*.ts --outDir dist/netlify-functions --module CommonJS --target ES2020 --esModuleInterop --skipLibCheck --declaration false && rm -f dist/netlify-functions/*.d.ts dist/netlify-functions/*.d.ts.map",
     "build:functions": "tsc && cp -r netlify-functions dist/"
   },
   "dependencies": {
