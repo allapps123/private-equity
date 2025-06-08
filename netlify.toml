@@ -1,6 +1,6 @@
 [build]
   command = "pnpm build:all"
-  publish = "src/dist"
+  publish = "dist"
   functions = "server/dist/netlify-functions"
 
 [dev]
