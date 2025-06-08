@@ -272,16 +272,16 @@ export default function InvestmentScreening() {
         
         switch (criterion.name) {
           case 'Doanh Thu Tối Thiểu':
-            matches = company.revenue >= criterion.value;
+            matches = company.revenue >= Number(criterion.value);
             break;
           case 'Tăng Trưởng Doanh Thu':
-            matches = company.growthRate >= criterion.value;
+            matches = company.growthRate >= Number(criterion.value);
             break;
           case 'Quy Mô Thị Trường':
-            matches = company.marketSize >= criterion.value;
+            matches = company.marketSize >= Number(criterion.value);
             break;
           case 'Quy Mô Đội Ngũ':
-            matches = company.teamSize >= criterion.value;
+            matches = company.teamSize >= Number(criterion.value);
             break;
           case 'Giai Đoạn Phát Triển':
             const stages = criterion.value.toString().split(',');

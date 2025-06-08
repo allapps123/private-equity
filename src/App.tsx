@@ -13,34 +13,45 @@ import Portfolio from './routes/Portfolio';
 import Alerts from './routes/Alerts';
 import Reports from './routes/Reports';
 
+// Import components
+import LoginButton from './components/LoginButton';
+
 function AppContent() {
   const { role, isAuthenticated } = useUserStore();
   const alerts = useAlertStore(state => state.alerts);
   const location = useLocation();
   
-  const criticalAlerts = alerts.filter(alert => alert.priority === 'high');
+  const criticalAlerts = alerts; // Show all alerts since priority is not defined in Alert type
 
   // Hide nav on landing and login pages
   const hideNav = ['/', '/login', '/about'].includes(location.pathname);
 
   if (hideNav) {
     return (
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/deal-sourcing" element={<DealSourcing />} />
-        <Route path="/valuation" element={<Valuation />} />
-        <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/alerts" element={<Alerts />} />
-        <Route path="/reports" element={<Reports />} />
-      </Routes>
+      <>
+        {/* Show Login button only when not authenticated and not on login page */}
+        {!isAuthenticated && location.pathname !== '/login' && <LoginButton />}
+        
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/deal-sourcing" element={<DealSourcing />} />
+          <Route path="/valuation" element={<Valuation />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/alerts" element={<Alerts />} />
+          <Route path="/reports" element={<Reports />} />
+        </Routes>
+      </>
     );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      {/* Show Login button when not authenticated */}
+      {!isAuthenticated && <LoginButton />}
+      
       {/* Navigation */}
       <nav className="bg-black/20 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
@@ -162,6 +173,17 @@ function AppContent() {
                 </button>
                 <button className="p-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-gray-300 hover:text-white">
                   <span>👤</span>
+                </button>
+                <button 
+                  onClick={() => {
+                    const { logout } = useUserStore.getState();
+                    logout();
+                    window.location.href = '/';
+                  }}
+                  className="p-2 rounded-xl bg-red-500/20 hover:bg-red-500/30 transition-all duration-300 hover:scale-105 text-red-300 hover:text-red-200"
+                  title="Đăng xuất"
+                >
+                  <span>🚪</span>
                 </button>
               </div>
             </div>

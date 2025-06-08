@@ -12,7 +12,8 @@
     "start": "pnpm --filter dealvault-pe-frontend start",
     "server": "NODE_OPTIONS=--experimental-specifier-resolution=node pnpm --filter dealvault-pe-backend dev",
     "dev:all": "concurrently \"pnpm server\" \"pnpm dev\"",
-    "netlify:dev": "netlify dev",
+    "netlify:dev": "pnpm build:functions && netlify dev",
+    "build:functions": "pnpm --filter dealvault-pe-backend build",
     "build:all": "pnpm --filter dealvault-pe-backend build && pnpm --filter dealvault-pe-frontend build",
     "netlify:build": "pnpm install && pnpm build:all"
   },

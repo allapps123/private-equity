@@ -4,7 +4,7 @@ import { useUserStore } from '../store/user';
 
 export default function Navigation() {
   const location = useLocation();
-  const { user, logout } = useUserStore();
+  const { role, isAuthenticated, logout } = useUserStore();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -57,7 +57,7 @@ export default function Navigation() {
 
   const isActive = (path: string) => location.pathname === path;
 
-  if (!user) return null;
+  if (!isAuthenticated) return null;
 
   return (
     <>
@@ -135,17 +135,21 @@ export default function Navigation() {
                     <span className="text-lg">👤</span>
                   </div>
                   <div className="hidden md:block text-left">
-                    <p className="text-white font-semibold">{user.name}</p>
-                    <p className="text-gray-400 text-sm">{user.role}</p>
+                    <p className="text-white font-semibold">
+                      {role === 'analyst' ? 'Chuyên Viên' : role === 'partner' ? 'Đối Tác' : 'Nhà Đầu Tư'}
+                    </p>
+                    <p className="text-gray-400 text-sm">{role}</p>
                   </div>
                 </button>
 
                 {/* Dropdown Menu */}
                 <div className="absolute right-0 top-full mt-2 w-64 bg-slate-800/90 backdrop-blur-lg border border-white/20 rounded-2xl shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto">
                   <div className="p-4 border-b border-white/10">
-                    <p className="text-white font-semibold">{user.name}</p>
-                    <p className="text-gray-400 text-sm">{user.email}</p>
-                    <p className="text-blue-400 text-xs mt-1">{user.role}</p>
+                    <p className="text-white font-semibold">
+                      {role === 'analyst' ? 'Chuyên Viên' : role === 'partner' ? 'Đối Tác' : 'Nhà Đầu Tư'}
+                    </p>
+                    <p className="text-gray-400 text-sm">dealvault@example.com</p>
+                    <p className="text-blue-400 text-xs mt-1">{role}</p>
                   </div>
                   
                   <div className="p-2">

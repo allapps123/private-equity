@@ -8,7 +8,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [userType, setUserType] = useState<'analyst' | 'partner' | 'lp'>('analyst');
   const navigate = useNavigate();
-  const login = useUserStore(state => state.login);
+  const setRole = useUserStore(state => state.setRole);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ export default function Login() {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500));
     
-    await login(email, password);
+    setRole(userType);
     setIsLoading(false);
     navigate('/dashboard');
   };

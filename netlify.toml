@@ -1,24 +1,22 @@
 [build]
   command = "pnpm build:all"
   publish = "src/dist"
-  functions = "server/netlify-functions"
+  functions = "server/dist/netlify-functions"
 
 [dev]
   port = 8888
-  functions = "server/netlify-functions"
-  framework = "#auto"
-  command = "pnpm dev:all"
+  functions = "server/dist/netlify-functions"
+  framework = "vite"
+  command = "pnpm --filter dealvault-pe-frontend dev"
   functionsPort = 9999
+  targetPort = 5173
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["express", "cors", "dotenv", "@types/express", "@types/cors"]
-  included_files = ["server/**/*"]
   
 [build.environment]
   NODE_VERSION = "18"
   PNPM_VERSION = "8"
-  NODE_OPTIONS = "--experimental-specifier-resolution=node"
 
 [[redirects]]
   from = "/api/*"
